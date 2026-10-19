@@ -1,0 +1,26 @@
+name: Artifact Demo
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Produce small text output
+        run: |
+          echo "artifact-demo run on $(date -u +%Y-%m-%dT%H:%M:%SZ)" > demo-output.txt
+          cat demo-output.txt
+
+      - name: Upload demo output artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-output
+          path: demo-output.txt
+          retention-days: 7
